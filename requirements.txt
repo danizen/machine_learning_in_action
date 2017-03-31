@@ -1,0 +1,12 @@
+Cython
+ipython
+jupyter
+matplotlib
+nltk
+numpy
+pandas
+scikit-learn
+sklearn
+word2vec
+yadlt
+
