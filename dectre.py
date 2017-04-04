@@ -75,10 +75,17 @@ def getTreeDepth(myTree):
 
 
 def plotMidText(cntrPt, parentPt, label):
-    pass
+    xMid = (parentPt[0] - cntrPt[0])/2.0 + cntrPt[0]
+    yMid = (parentPt[1] - cntrPt[1])/2.0 + cntrPt[1]
+    createPlot.ax1.text(xMid, yMid, label)
 
 
-def plotTree(atree, parentPt, label):
+def plotTree(myTree, parentPt, label):
+    numLeafs = getNumLeafs(myTree)
+    maxDepth = getTreeDepth(myTree)
+
+    firstStr = myTree.keys()[0]
+
     pass
 
 
