@@ -6,8 +6,9 @@ import matplotlib.pyplot as plt
 def loadDataSet(filename):
     mat = np.loadtxt(filename, dtype=np.float32)
     m, n = mat.shape
-    dataMat = np.hstack((np.ones((m, 1), dtype=np.float32), np.delete(mat, 2, axis=1)))
-    labelMat = np.delete(mat, [0,1], axis=1)
+    lastcol = n - 1
+    dataMat = np.hstack((np.ones((m, 1), dtype=np.float32), np.delete(mat, lastcol, axis=1)))
+    labelMat = np.delete(mat, range(0, lastcol), axis=1)
     return dataMat, labelMat
 
 
@@ -63,3 +64,41 @@ def plotBestFit(datamat, labelmat, weights):
     plt.ylabel('X2')
     plt.show()
 
+
+def classifyVector(v, weights):
+    prob = sigmoid(sum(v * weights))
+    if prob > 0.5:
+        return 1
+    else:
+        return 0
+
+
+def colicTest(trainingFile, testFile):
+    datamat, labelmat = loadDataSet(trainingFile)
+    weights = stocGradAscent(datamat, labelmat, 500)
+
+    datamat, labelmat = loadDataSet(testFile)
+    numitems = datamat.shape[0]
+    numerrors = 0
+
+    for i in range(numitems):
+        features = datamat[i]
+        expected_class = labelmat[i]
+
+        predicted_class = classifyVector(features, weights)
+        if int(expected_class) != predicted_class:
+            numerrors += 1
+
+    errorRate = float(numerrors)/numitems
+    print('the error rate of this test is %f' % errorRate)
+    return errorRate
+
+
+def multiTest(trainingFile, testFile):
+    numtests = 10
+    errorSum = 0
+
+    for k in range(numtests):
+        errorSum += colicTest(trainingFile, testFile)
+    print('after %d iterations, average error rate is %f.' % (numtests, errorSum/float(numtests)))
+    
