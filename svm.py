@@ -27,3 +27,18 @@ def clipAlpha(aj, H, L):
         aj = L
     return aj
 
+
+def smoSimple(data, labels, C, tolerance, maxiter):
+    b = 0
+    m, n = data.shape
+    alphas = np.zeros((m,1))    # to force choice of matrix multiplier
+    count = 0
+    while count < maxiter:
+        alphaPairsChanged = 0
+        for i in range(m):
+            fXi = np.multiply(alphas, labels).T
+            pass
+        count += 1
+    # Not fininshed yet
+    return alphas
+
